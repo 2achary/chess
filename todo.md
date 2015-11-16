@@ -1,1 +1,2 @@
-## To do\n* enforce that pawn capturing only happens for an opponent's piece
+#### To do
+* enforce that pawn capturing only happens for an opponent's piece
