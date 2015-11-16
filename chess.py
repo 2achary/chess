@@ -5,39 +5,45 @@ class Board:
     }
 
     positions = {
-        'r': ['a1', 'h1'],
-        'p': [char + '2' for char in 'a b c d e f g h'.split()],
-        'n': ['b1', 'g1'],
-        'b': ['c1', 'f1'],
-        'k': ['e1'],
-        'q': ['d1'],
-        'R': ['a8', 'h8'],
-        'P': [char + '7' for char in 'a b c d e f g h'.split()],
-        'N': ['b8', 'g8'],
-        'B': ['c8', 'f8'],
-        'K': ['e8'],
-        'Q': ['d8']
+        'r': [(0, 0), (0, 7)],
+        'p': [(1, i) for i in range(8)],
+        'n': [(0, 1), (0, 6)],
+        'b': [(0, 2), (0, 5)],
+        'k': [(0, 4)],
+        'q': [(0, 3)],
+        'R': [(7, 0), (7, 7)],
+        'P': [(6, i) for i in range(8)],
+        'N': [(7, 1), (7, 6)],
+        'B': [(7, 2), (7, 5)],
+        'K': [(7, 4)],
+        'Q': [(7, 3)]
     }
 
     def __init__(self):
         self.abc = 'a b c d e f g h'.split()
-        self.board = {char + str(num): '_' for char in self.abc
-                                           for num in range(1, 9)}
+        self.board = [['_' for i in range(8)] for num in range(8)]
+
+    def set_position(self, coordinates, piece):
+        r, c = coordinates
+        self.board[r][c] = piece
+
+    @property
+    def get_positions(self):
+        return self.board
 
     def initialize_board(self):
         for name, coordList in self.positions.items():
             for coord in coordList:
-                self.board[coord] = name
+                self.set_position(coord, name)
 
     def print_board(self):
-        sorted_keys = [[char + str(i) for char in self.abc] for i in range(1, 9)]
-        row_values = [[self.board[k] for k in row] for row in sorted_keys]
+
         row_format = str('|'.join(["{%s:^5}" % str(i) for i in range(8)]))
         letter_line_format = str(''.join(["{%s:^6}" % str(i) for i in range(8)]))
         letters = '      ' + letter_line_format.format(*self.abc)
         horizontal_line = '      ' + '------' * 7 + '-----'
         print(horizontal_line)
-        for n, row in enumerate(row_values, 1):
+        for n, row in enumerate(self.get_positions, 1):
             print('{}    |'.format(n) + row_format.format(*row) + '|\n' + horizontal_line)
         print('\n' + letters)
 
@@ -56,9 +62,9 @@ class Pawn:
         valid = []
 
 
-
-
-board = Board()
-board.initialize_board()
-# print(board.board)
-board.print_board()
+if __name__ == '__main__':
+    board = Board()
+    # print(board.board)
+    board.initialize_board()
+    # print(board.board)
+    board.print_board()
