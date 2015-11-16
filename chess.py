@@ -63,37 +63,30 @@ class Pawn:
         moves = []
         if self.color == 'lower':
             tmp = (old[0] + 1, old[1])
-            try:
 
+            try:
                 if board[old[0] + 1][old[1]] == '_':
                     moves.append(tmp)
-
             except IndexError:
                 pass
 
             try:
-
                 if self.is_first_move:
                     tmp = (old[0] + 2, old[1])
                     if board[old[0] + 2][old[1]] == '_':
                         moves.append(tmp)
-
             except IndexError:
                 pass
 
             try:
-
                 if board[old[0] + 1][old[1] + 1] is not '_':
                     moves.append((old[0] + 1, old[1] + 1))
-
             except IndexError:
                 pass
 
             try:
-
                 if board[old[0] + 1][old[1] - 1] is not '_':
                     moves.append((old[0] + 1, old[1] - 1))
-
             except IndexError:
                 pass
         print('moves: {}'.format(moves))
