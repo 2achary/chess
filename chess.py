@@ -65,12 +65,14 @@ class Pawn:
             tmp = (old[0] + 1, old[1])
 
             try:
+                # allow pawn to move forward one space if empty
                 if board[old[0] + 1][old[1]] == '_':
                     moves.append(tmp)
             except IndexError:
                 pass
 
             try:
+                # allow pawn to move forward 2 spaces on its first move
                 if self.is_first_move:
                     tmp = (old[0] + 2, old[1])
                     if board[old[0] + 2][old[1]] == '_':
@@ -79,7 +81,10 @@ class Pawn:
                 pass
 
             try:
-                if board[old[0] + 1][old[1] + 1] is not '_':
+                # allow pawn to capture diagonally if target is
+                # occupied by opponent piece
+                target = board[old[0] + 1][old[1] + 1]
+                if target.isalpha() and not target.islower():
                     moves.append((old[0] + 1, old[1] + 1))
             except IndexError:
                 pass
@@ -98,7 +103,7 @@ class Pawn:
         moves = self.get_moves(old, board)
         print('new: {}'.format(new))
         if new in moves:
-            print('true')
+            # print('true')
             board[new[0]][new[1]] = 'p' if self.color == 'lower' else 'P'
             board[old[0]][old[1]] = '_'
             self.is_first_move = False
